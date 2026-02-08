@@ -16,7 +16,9 @@ namespace KASHOP.DAL.Data
         public DbSet<Product> Products { get; set; }
 
         public DbSet<ProductTranslation> ProductTranslations { get; set; }
-
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
     : base(options)
         {
@@ -40,6 +42,17 @@ namespace KASHOP.DAL.Data
                 .WithMany()
                 .HasForeignKey(c => c.CreatedBy)
                 .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<Cart>()
+    .HasOne(c => c.User)
+    .WithMany()
+    .HasForeignKey(c => c.UserId)
+    .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Order>()
+    .HasOne(c => c.User)
+    .WithMany()
+    .HasForeignKey(c => c.UserId)
+    .OnDelete(DeleteBehavior.NoAction);
 
 
         }

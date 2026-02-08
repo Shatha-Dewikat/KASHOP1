@@ -1,4 +1,5 @@
 
+using KASHOP.BLL;
 using KASHOP.BLL.Service;
 using KASHOP.DAL.Data;
 using KASHOP.DAL.Model;
@@ -6,12 +7,15 @@ using KASHOP.DAL.Repository;
 using KASHOP.DAL.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Stripe;
 using System.Globalization;
 using System.Text;
+
 
 namespace KASHOP.PL
 {
@@ -26,6 +30,7 @@ namespace KASHOP.PL
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+            builder.Services.AddScoped<IEmailSender, EmailSender>();
 
             builder.Services.AddLocalization(options => options.ResourcesPath = "");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -40,6 +45,12 @@ namespace KASHOP.PL
 
             builder.Services.AddScoped<ISeedData, RoleSeedData>();
             builder.Services.AddScoped<ISeedData, UserSeedData>();
+
+            builder.Services.Configure<StripeSettings>(
+    builder.Configuration.GetSection("Stripe")
+);
+
+            StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -83,6 +94,13 @@ namespace KASHOP.PL
             builder.Services.AddScoped<ICategoryRespository, CategoryRespository>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
 
+            builder.Services.AddScoped<ITokenService,BLL.Service.TokenService>();
+            builder.Services.AddScoped<IProductService,BLL.Service.ProductService>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+            
+
+            builder.Services.AddScoped<IFileService, BLL.Service.FileService>();
             var app = builder.Build();
             app.UseRequestLocalization(app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
             // Configure the HTTP request pipeline.
@@ -94,8 +112,8 @@ namespace KASHOP.PL
             }
 
             app.UseHttpsRedirection();
-
-            app.UseAuthorization();
+            app.UseAuthentication();   
+            app.UseAuthorization();   
 
             using (var scope = app.Services.CreateScope())
             {

@@ -1,4 +1,5 @@
 ﻿using KASHOP.DAL.Data;
+using KASHOP.DAL.DTO.Response;
 using KASHOP.DAL.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,10 +11,12 @@ namespace KASHOP.DAL.Repository
     public class ProductRepository : IProductRepository
     {
         private readonly ApplicationDbContext _context;
+      
 
         public ProductRepository(ApplicationDbContext context)
         {
             _context = context;
+          
             _context = context;
         }
 
@@ -22,6 +25,60 @@ namespace KASHOP.DAL.Repository
             await _context.AddAsync(request);
             await _context.SaveChangesAsync();
             return request;
+        }
+
+        public async Task<Product?> FindByIdAsync(int id)
+        {
+            return await _context.Products
+                .Include(c => c.Translations)
+          
+                .Include(c => c.Reviews)
+                    .ThenInclude(r => r.User)
+                .FirstOrDefaultAsync(c => c.Id == id);
+        }
+
+
+       
+       
+
+
+        public Task<Product> GetAllAsync()
+        {
+            return _context.Products
+                .Include(p => p.Translations)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> DecreaseQuantitesAsync(List<(int productId, int quantity)> items)
+        {
+            var productIds = items.Select(p => p.productId).ToList();
+
+            var products = await _context.Products
+                .Where(p => productIds.Contains(p.Id))
+                .ToListAsync();
+
+            foreach (var product in products)
+            {
+                var item = items.FirstOrDefault(p => p.productId == product.Id);
+
+                if (product.Quantity < item.quantity)
+                {
+                    return false;
+                }
+
+                product.Quantity -= item.quantity;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public IQueryable<Product> Query()
+        {
+            return _context.Products
+       .Include(p => p.Translations)
+       .AsQueryable();
         }
     }
 }

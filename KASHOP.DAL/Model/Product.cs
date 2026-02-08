@@ -22,6 +22,11 @@ namespace KASHOP.DAL.Model
 
         public List<ProductTranslation> Translations { get; set; }
 
+       
+
+        public List<Review> Reviews { get; set; }
+
+
 
     }
 }

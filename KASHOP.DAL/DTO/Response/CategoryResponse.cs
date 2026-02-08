@@ -8,7 +8,9 @@ namespace KASHOP.DAL.DTO.Response
 {
     public class CategoryResponse
     {
-       public Status Status { get; set; }
+        public readonly object CreatedBy;
+
+        public Status Status { get; set; }
         public List<CategoryTranslationResponse> Translations { get; set; }
     }
 }

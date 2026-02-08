@@ -1,4 +1,5 @@
 ﻿using KASHOP.BLL.Service;
+using KASHOP.DAL.DTO.Response;
 using KASHOP.DAL.Repository;
 using KASHOP.DAL.Utils;
 using Microsoft.AspNetCore.Identity;
@@ -8,18 +9,31 @@ namespace KASHOP.PL
 {
     public static class AppConfiguration
     {
-        public static void Config(IServiceCollection services)
+        public static void Config(IServiceCollection Services)
         {
-            services.AddScoped<ICategoryRespository, CategoryRespository>();
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
-            services.AddScoped<ISeedData, RoleSeedData>();
-            services.AddScoped<ISeedData, UserSeedData>();
-            services.AddTransient<IEmailSender, EmailSender>();
+            Services.AddScoped<ICategoryRespository, CategoryRespository>();
+            Services.AddScoped<ICategoryService, CategoryService>();
+            Services.AddScoped<IAuthenticationService, AuthenticationService>();
+            Services.AddScoped<ISeedData, RoleSeedData>();
+            Services.AddScoped<ISeedData, UserSeedData>();
+            Services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddScoped<IFileService, FileService>();
-            services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<IProductRepository, ProductRepository>();
+            Services.AddScoped<IFileService, FileService>();
+            Services.AddScoped<IProductService, ProductService>();
+            Services.AddScoped<IProductRepository, ProductRepository>();
+            Services.AddScoped<ITokenService, TokenService>();
+            Services.AddScoped<ICartService, CartService>();
+            Services.AddScoped<ICartRepository, CartRepository>();
+            Services.AddScoped<ICheckoutService, CheckoutService>();
+            Services.AddScoped<IOrderRepository, OrderRepository>();
+            Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+            Services.AddScoped<IOrderService, OrderService>();
+            Services.AddScoped<IManageUserService, ManageUserService>();
+            Services.AddScoped<IReviewService, BLL.Service.ReviewService>();
+            Services.AddScoped<IReviewRepository, ReviewRepository>();
+
+
+
         }
     }
 

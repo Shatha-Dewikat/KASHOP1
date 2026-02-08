@@ -4,11 +4,8 @@ using System.Text;
 
 namespace KASHOP.DAL.DTO.Response
 {
-    public class RegisterResponse
+    public class RegisterResponse : BaseResponse
     {
-        public string Message { get; set; }
-        public bool Success { get; set; }
-
-        public List<string>? Errors { get; set; }
+      
     }
 }

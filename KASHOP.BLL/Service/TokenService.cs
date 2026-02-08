@@ -46,12 +46,13 @@ namespace KASHOP.BLL.Service
             );
 
             var token = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Audience"],
-                claims: userClaims,
-                expires: DateTime.UtcNow.AddMinutes(30),
-                signingCredentials: creds
-            );
+     issuer: _configuration["Jwt:Issuer"],
+     audience: _configuration["Jwt:Audience"],
+     claims: userClaims,
+     expires: DateTime.UtcNow.AddHours(1),
+     signingCredentials: creds
+ );
+
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
