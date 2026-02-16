@@ -8,6 +8,6 @@ namespace KASHOP.BLL.Service
     public interface IFileService
     {
         Task<string?> UploadAsync(IFormFile file);
-        Task<string> UploadAsync(object mainImage);
+        
     }
 }

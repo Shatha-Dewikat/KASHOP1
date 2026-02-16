@@ -16,14 +16,14 @@ namespace KASHOP.BLL.Service
                 EnableSsl = true,
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(
-                    "s12216872@stu.najah.edu",
-                    "pzwq dgkv kjkz phsy"
+                    "sdwikat93@gmail.com",
+                    "kpzu vnhs coiy ekve"
                 )
             };
 
             return client.SendMailAsync(
                 new MailMessage(
-                    from: "s12216872@stu.najah.edu",
+                    from: "sdwikat93@gmail.com",
                     to: email,
                     subject,
                     htmlMessage

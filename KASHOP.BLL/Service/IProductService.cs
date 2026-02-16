@@ -13,7 +13,7 @@ namespace KASHOP.BLL.Service
         Task<List<ProductResponse>> GetAllProductsForAdmin();
         Task<List<ProductUserResponse>> GetAllProductsForUser(string lang = "en", int page = 1, int limit = 3, string? search = null);
         Task<List<ProductUserResponse>> GetAllProductsForUser(string lang = "en");
-
+      
         Task<ProductUserDetails> GetAllProductsDetailsForUser(int id,
        string lang = "en");
     }

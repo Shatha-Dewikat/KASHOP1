@@ -45,7 +45,7 @@ namespace KASHOP.DAL.Repository
         public Task<Product> GetAllAsync()
         {
             return _context.Products
-                .Include(p => p.Translations)
+                .Include(static p => p.Translations)
                 .FirstOrDefaultAsync();
         }
 

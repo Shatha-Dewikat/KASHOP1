@@ -21,9 +21,9 @@ namespace KASHOP.DAL.Utils
             {
                 var user1 = new ApplicationUser
                 {
-                    UserName = "tshreem",
-                    Email = "t@gmail.com",
-                    FullName = "tariq shreem",
+                    UserName = "Shatha_Dwikat",
+                    Email = "sdwikat93@gmail.com",
+                    FullName = "Shatha Dwikat",
                     EmailConfirmed = true
                 };
 

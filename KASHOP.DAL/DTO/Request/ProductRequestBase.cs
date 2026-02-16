@@ -1,8 +1,10 @@
-﻿namespace KASHOP.DAL.DTO.Request
+﻿using Microsoft.AspNetCore.Http;
+
+namespace KASHOP.DAL.DTO.Request
 {
     public class ProductRequestBase
     {
 
-        public String MainImage { get; set; }
+        public IFormFile? MainImage { get; set; }
     }
 }

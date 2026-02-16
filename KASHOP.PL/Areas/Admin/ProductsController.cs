@@ -7,7 +7,8 @@ using Microsoft.Extensions.Localization;
 
 namespace KASHOP.PL.Areas.Admin
 {
-    [Route("api/[controller]")]
+    [Route("api/admin/[controller]")]
+    [Consumes("multipart/form-data")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -23,12 +24,22 @@ namespace KASHOP.PL.Areas.Admin
             _localizer = localizer;
         }
 
+        [HttpGet("")]
+        public async Task<IActionResult> Index()
+        {
+            var response = await _productService.GetAllProductsForAdmin();
+            return Ok(new { message = _localizer["Success"].Value, response });
+        }
+
+
         [HttpPost("")]
         public async Task<IActionResult> Create([FromForm] ProductRequest request)
         {
             var response = await _productService.CreateProduct(request);
             return Ok(response);
         }
+
+
 
     }
 }

@@ -5,11 +5,13 @@ using KASHOP.DAL.Data;
 using KASHOP.DAL.Model;
 using KASHOP.DAL.Repository;
 using KASHOP.DAL.Utils;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Stripe;
@@ -31,10 +33,13 @@ namespace KASHOP.PL
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
             builder.Services.AddScoped<IEmailSender, EmailSender>();
+            builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddLocalization(options => options.ResourcesPath = "");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
       options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            AppConfiguration.Config(builder.Services);
 
 
             builder.Services
@@ -52,7 +57,12 @@ namespace KASHOP.PL
 
             StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            builder.Services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
@@ -61,12 +71,14 @@ namespace KASHOP.PL
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ClockSkew = TimeSpan.Zero,
+           // ClockSkew = TimeSpan.Zero,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!))
         };
     });
+
+
 
             const string defaultCulture = "en";
 
@@ -89,7 +101,7 @@ namespace KASHOP.PL
             });
             builder.Services.AddSwaggerGen();
             builder.Services.AddControllers();
-            builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+            builder.Services.AddScoped<BLL.Service.IAuthenticationService, BLL.Service.AuthenticationService>();
 
             builder.Services.AddScoped<ICategoryRespository, CategoryRespository>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
@@ -110,7 +122,7 @@ namespace KASHOP.PL
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseAuthentication();   
             app.UseAuthorization();   

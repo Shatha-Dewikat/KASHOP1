@@ -9,6 +9,8 @@ namespace KASHOP.DAL.Repository
     {
         List<Category> GetAll();
         Category Create(Category Request);
-
+        Task<Category?> FindByIdAsync(int id);
+        Task DeleteAsync(Category category);
+        Task<Category?> UpdateAsync(Category category);
     }
 }

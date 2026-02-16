@@ -1,5 +1,6 @@
 ﻿using KASHOP.DAL.DTO.Request;
 using KASHOP.DAL.Model;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +17,7 @@ namespace KASHOP.DAL.DTO.Response
 
         public string CreatedBy { get; set; }
 
-        public string MainImage { get; set; }
+        public IFormFile? MainImage { get; set; }
 
         public List<CategoryTranslationResponse> Translations { get; set; }
 

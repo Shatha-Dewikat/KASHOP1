@@ -1,4 +1,5 @@
 ﻿using KASHOP.DAL.Model;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +16,7 @@ public string Name { get; set; }
 
         public double Rate { get; set; }
 
-        public string MainImage { get; set; }
+        public IFormFile MainImage { get; set; }
 
         
 

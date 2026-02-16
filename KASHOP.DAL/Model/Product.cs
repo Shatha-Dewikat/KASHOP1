@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,11 +15,11 @@ namespace KASHOP.DAL.Model
 
         public double Rate { get; set; }
 
-        public string MainImage { get; set; }
+        public string? MainImage { get; set; }
 
         public int CategoryId { get; set; }
-
-        public Category Category { get; set; }
+        public string? Description { get; set; }
+        public Category ?Category { get; set; }
 
         public List<ProductTranslation> Translations { get; set; }
 

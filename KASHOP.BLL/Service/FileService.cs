@@ -11,12 +11,8 @@ namespace KASHOP.BLL.Service
         {
             if (file != null && file.Length > 0)
             {
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                var filePath = Path.Combine(
-                    Directory.GetCurrentDirectory(),
-                    "images",
-                    fileName
-                );
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName); // TTTPT342GWEGRE2.png
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
 
                 using (var stream = File.Create(filePath))
                 {
@@ -29,10 +25,6 @@ namespace KASHOP.BLL.Service
             return null;
         }
 
-        public Task<string> UploadAsync(object mainImage)
-        {
-            throw new NotImplementedException();
-        }
     }
 
 }

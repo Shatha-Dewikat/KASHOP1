@@ -29,7 +29,7 @@ namespace KASHOP.PL.Areas.User
         [HttpGet("")]
         public IActionResult Index()
         {
-            var response = _category.GetAllCategories();
+            var response = _category.GetAllCategoriesForUser();
             return Ok(new
             {
                 message = _localizer["Success"].Value,

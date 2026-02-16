@@ -1,4 +1,5 @@
-﻿using KASHOP.DAL.DTO.Request;
+﻿using KASHOP.BLL.MapsterConfigration;
+using KASHOP.DAL.DTO.Request;
 using KASHOP.DAL.DTO.Response;
 using KASHOP.DAL.Model;
 using System;
@@ -9,7 +10,11 @@ namespace KASHOP.BLL.Service
 {
     public interface ICategoryService
     {
-        List<CategoryResponse> GetAllCategories();
+        Task<List<CategoryUserResponse>> GetAllCategoriesForUser(string lang = "en");
+        Task<List<CategoryResponse>> GetAllCategoriesForAdmin();
         CategoryResponse CreateCategory(CategoryRequest Request);
+
+        Task<BaseResponse> DeleteCategoryAsync(int id);
+        Task<BaseResponse> UpdateCategoryAsync(int id, CategoryRequest request);
     }
 }

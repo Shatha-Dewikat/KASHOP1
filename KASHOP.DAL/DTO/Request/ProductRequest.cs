@@ -5,11 +5,13 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
+
+
 namespace KASHOP.DAL.DTO.Request
 {
     public class ProductRequest
     {
-        public readonly object MainImage;
+        
 
         public List<ProductTranslationRequest> Translations { get; set; }
 
@@ -19,7 +21,7 @@ namespace KASHOP.DAL.DTO.Request
 
         public int Quantity { get; set; }
 
-      public String Image { get; set; }
+      public IFormFile ?MainImage { get; set; }
 
         public int CategoryId { get; set; }
     }

@@ -97,7 +97,10 @@ namespace KASHOP.BLL.Service
                     Metadata = new Dictionary<string, string>
 {
     { "UserId", userId },
-}
+
+
+},
+                     LineItems = new List<SessionLineItemOptions>()
 
                 };
 
